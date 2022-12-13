@@ -7,10 +7,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import soixam.dto.reponse.JwtResponse;
 import soixam.dto.reponse.ResponseMessage;
+import soixam.dto.request.ChangeAvatar;
+import soixam.dto.request.ChangePassword;
 import soixam.dto.request.SignInForm;
 import soixam.dto.request.SignUpForm;
 import soixam.model.Role;
@@ -22,6 +25,7 @@ import soixam.security.userpincal.UserPrinciple;
 import soixam.service.impl.RoleServiceIMPL;
 import soixam.service.impl.UserServiceIMPL;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
@@ -86,5 +90,46 @@ public class AuthController {
         String token = jwtProvider.createToken(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
         return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getName(),userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
+    }
+    @PutMapping( "/change_avatar" )
+    public ResponseEntity<?> changeAvatar(HttpServletRequest httpServletRequest, @Valid @RequestBody ChangeAvatar changeAvatar) {
+        String jwt = jwtTokenFilter.getJwt(httpServletRequest);
+        String username = jwtProvider.getUsernameFormToken(jwt);
+        User user;
+        try {
+            if (changeAvatar.getAvatar() == null || changeAvatar.getAvatar().trim().equals("")) {
+                return new ResponseEntity<>(new ResponseMessage("no"), HttpStatus.OK);
+            } else {
+                user = userServiceIMPL.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found with ->" +
+                        "username:" + username));
+                user.setAvatar(changeAvatar.getAvatar());
+                userServiceIMPL.save(user);
+            }
+            return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
+        } catch (UsernameNotFoundException e) {
+            return new ResponseEntity<>(new ResponseMessage(e.getMessage()), HttpStatus.OK);
+        }
+    }
+
+    @PutMapping( "change_password" )
+    public ResponseEntity<?> changePassword(HttpServletRequest httpServletRequest, @Valid @RequestBody ChangePassword changePassword) {
+        String jwt = jwtTokenFilter.getJwt(httpServletRequest);
+        String username = jwtProvider.getUsernameFormToken(jwt);
+        User user;
+        try {
+            user = userServiceIMPL.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found with-> username" + username));
+            boolean matches = passwordEncoder.matches(changePassword.getOldPassword(), user.getPassword());
+            if (changePassword.getNewPassword() != null) {
+                if (matches) {
+                    user.setPassword(passwordEncoder.encode(changePassword.getNewPassword()));//ma hoa mat khau
+                    userServiceIMPL.save(user);
+                } else {
+                    return new ResponseEntity<>(new ResponseMessage("no"), HttpStatus.OK);
+                }
+            }
+            return new ResponseEntity<>(new ResponseMessage("yes"),HttpStatus.OK);
+        } catch (UsernameNotFoundException e) {
+            return new ResponseEntity<>(new ResponseMessage(e.getMessage()), HttpStatus.OK);
+        }
     }
 }
