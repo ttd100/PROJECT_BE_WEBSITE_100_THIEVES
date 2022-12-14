@@ -32,6 +32,7 @@ public class CateController {
         if (category.getAvatar().trim().equals("")){
             return new ResponseEntity<>(new ResponseMessage("avatar_null"),HttpStatus.OK);
         }
+        category.setUser(user);
         categoryService.save(category);
         return new ResponseEntity<>(new ResponseMessage("create_success!!!"),HttpStatus.OK);
     }
