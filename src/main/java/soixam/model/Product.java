@@ -36,4 +36,5 @@ public class Product {
     private Category category;
     @ManyToOne
     private User user;
+    //chien
 }
