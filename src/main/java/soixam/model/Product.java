@@ -19,10 +19,10 @@ import javax.validation.constraints.Size;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idProduct;
     @NotBlank
     @Size(min = 5, max = 50)
-    String name;
+    String nameProduct;
     @NumberFormat
     @Min(0)
     private float price;
@@ -32,7 +32,7 @@ public class Product {
     @NumberFormat
     @Min(0)
     private int quantity;
-    @ManyToOne
+    @ManyToOne @JoinColumn(name = "idcategory")
     private Category category;
     @ManyToOne
     private User user;

@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface ICategoryRepository extends JpaRepository<Category,Long> {
-    Boolean existsByName(String name);
-    List<Category>findAllByNameContaining(String name);
+    Boolean existsByNameCategory(String name);
+    List<Category> findAllByNameCategoryContaining(String name);
 }
