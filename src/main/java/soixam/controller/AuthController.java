@@ -32,7 +32,7 @@ import java.util.Set;
 
 @RestController
 @CrossOrigin( origins = "*" )
-@RequestMapping( "/auth" )
+//@RequestMapping( "/auth" )
 public class AuthController {
     @Autowired
     UserServiceIMPL userServiceIMPL;
@@ -50,10 +50,10 @@ public class AuthController {
     @PostMapping( "/signup" )
     public ResponseEntity<?> register(@Valid @RequestBody SignUpForm signUpForm) {
         if (userServiceIMPL.existsByUsername(signUpForm.getUsername())) {
-            return new ResponseEntity<>(new ResponseMessage("The username is existed"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseMessage("nouser"), HttpStatus.OK);
         }
         if (userServiceIMPL.existsByEmail(signUpForm.getEmail())){
-            return new ResponseEntity<>(new ResponseMessage("The email is existed"),HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseMessage("noemail"),HttpStatus.OK);
         }
         User user = new User(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), passwordEncoder.encode(signUpForm.getPassword()));
         String avatar = "https://firebasestorage.googleapis.com/v0/b/chinhbeo-18d3b.appspot.com/o/avatar.jpg?alt=media&token=56f66b7d-6196-42da-bb8f-73828108db1e";
@@ -73,7 +73,6 @@ public class AuthController {
                 default:
                     Role userRole = roleServiceIMPL.findByName(RoleName.USER).orElseThrow(() -> new RuntimeException("Role not found"));
                     roles.add(userRole);
-
             }
         });
         user.setRoles(roles);
