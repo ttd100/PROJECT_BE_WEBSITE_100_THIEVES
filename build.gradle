@@ -56,6 +56,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.10'
     testCompileOnly         'org.projectlombok:lombok:1.18.10'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.10'
+
 }
 
 tasks.named('test') {

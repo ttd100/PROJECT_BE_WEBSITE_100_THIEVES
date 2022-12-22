@@ -27,7 +27,7 @@ public class CateController {
         if (user.getUsername().equals("Anonymous")){
             return new ResponseEntity<>(new ResponseMessage("chua_login"), HttpStatus.OK);
         }
-        if (categoryService.existsByName(category.getName())){
+        if (categoryService.existsByName(category.getNameCategory())){
             return new ResponseEntity<>(new ResponseMessage("Category_invalid"),HttpStatus.OK);
         }
         if (category.getAvatar().trim().equals("")){
@@ -64,13 +64,13 @@ public class CateController {
         if (!category1.isPresent()){
             return new ResponseEntity<>(new ResponseMessage("not_found"),HttpStatus.OK);
         }
-        if (category.getName().trim().equals("")){
+        if (category.getNameCategory().trim().equals("")){
             return new ResponseEntity<>(new ResponseMessage("name_category_invalid"),HttpStatus.OK);
         }
         if (category.getAvatar().trim().equals("")){
             return new ResponseEntity<>(new ResponseMessage("avatar_null"),HttpStatus.OK);
         }
-        category1.get().setName(category.getName());
+        category1.get().setNameCategory(category.getNameCategory());
         category1.get().setAvatar(category.getAvatar());
         categoryService.save(category1.get());
         return new ResponseEntity<>(new ResponseMessage("update_success"),HttpStatus.OK);

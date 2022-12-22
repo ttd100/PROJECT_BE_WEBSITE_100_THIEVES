@@ -1,7 +1,4 @@
 package soixam.service.product;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import soixam.model.Category;
 import soixam.model.Product;
 import soixam.service.IGeneric;
@@ -14,5 +11,6 @@ public interface IProductService extends IGeneric<Product> {
 
     Boolean existsByName(String name);
     Iterable<Product> findByCategory(Category category);
-    Product findByCategoryOrName(String name);
+    List<Product> findAllByIdCategory(Long idCategory);
+
 }

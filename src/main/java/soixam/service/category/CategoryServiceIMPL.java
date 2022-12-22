@@ -33,11 +33,11 @@ categoryRepository.deleteById(id);
 
     @Override
     public Boolean existsByName(String name) {
-        return categoryRepository.existsByName(name);
+        return categoryRepository.existsByNameCategory(name);
     }
 
     @Override
     public List<Category> findAllByNameContaining(String name) {
-        return categoryRepository.findAllByNameContaining(name);
+        return categoryRepository.findAllByNameCategoryContaining(name);
     }
 }
