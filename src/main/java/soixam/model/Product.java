@@ -1,5 +1,6 @@
 package soixam.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,8 @@ public class Product {
     private int quantity;
     @ManyToOne @JoinColumn(name = "idcategory")
     private Category category;
+    @ManyToOne @JoinColumn(name = "idproductstyle")
+    private ProductStyle productStyle;
     @ManyToOne
     private User user;
     //chien

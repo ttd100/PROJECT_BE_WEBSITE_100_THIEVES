@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
-import org.springframework.format.annotation.DateTimeFormat;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,7 +12,9 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+
 @Table( name = "carts")
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,16 +24,17 @@ public class Cart {
     private Long id;
     @Enumerated(EnumType.STRING)
     @NaturalId
+    @Column(length = 50)
     private CartStatus cartStatus;
     @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name = "CREATE_TIME")
-    private Date createTime;
-    @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name = "UPDATE_TIME")
-    private Date updateTime;
+    @Column(name = "CREATED_TIME")
+    private Date creationTime;
+    @Temporal(value=TemporalType.TIMESTAMP)
+    @Column(name="UPDATED_TIME")
+    private Date updatedTime;
     @ManyToOne
     private User user;
-    @ManyToMany( fetch = FetchType.EAGER)
-    @JoinTable( name = "product_cart",joinColumns = @JoinColumn(name = "cart_id"),inverseJoinColumns = @JoinColumn(name = "product_id"))
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "product_cart", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
     List<Product> products = new ArrayList<>();
 }
