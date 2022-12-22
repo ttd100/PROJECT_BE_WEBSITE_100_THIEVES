@@ -14,6 +14,6 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllByNameProductContaining(String name);
     Boolean existsByNameProduct(String name);
 
-    @Query("select o from Product o where o.category.idCategory=?1")
-    List<Product> findAllByIdCategory(Long idCategory);
+    @Query("select o from Product o where o.category.nameCategory=?1")
+    List<Product> findAllByNameCategory(String nameCategory);
 }

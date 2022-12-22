@@ -29,9 +29,9 @@ public class ProductController {
     private ICategoryService categoryService;
     @Autowired
     private UserDetailService userDetailService;
-    @GetMapping("search/{idCategory}")
-    public ResponseEntity<?> showByIdCategory(@PathVariable Long idCategory){
-        return ResponseEntity.ok(productService.findAllByIdCategory(idCategory));
+    @GetMapping("search/category/{nameCategory}")
+    public ResponseEntity<?> showByIdCategory(@PathVariable String nameCategory){
+        return ResponseEntity.ok(productService.findAllByNameCategory(nameCategory));
     }
     @PostMapping
     public ResponseEntity<?> createProduct(@RequestBody Product product){
@@ -93,7 +93,7 @@ public class ProductController {
         List<Product> productList = productService.findAll();
         return new ResponseEntity<>(productList,HttpStatus.OK);
     }
-    @GetMapping("search/{name}")
+    @GetMapping("search/name/{name}")
     public ResponseEntity<?>searchNameProduct(@PathVariable String name){
         if (name.trim().equals("")){
             return new ResponseEntity<>(new ResponseMessage("not_found"),HttpStatus.OK);

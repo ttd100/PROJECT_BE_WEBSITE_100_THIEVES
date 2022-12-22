@@ -11,6 +11,6 @@ public interface IProductService extends IGeneric<Product> {
 
     Boolean existsByName(String name);
     Iterable<Product> findByCategory(Category category);
-    List<Product> findAllByIdCategory(Long idCategory);
+    List<Product> findAllByNameCategory(String nameCategory);
 
 }

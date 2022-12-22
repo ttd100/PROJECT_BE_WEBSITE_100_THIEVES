@@ -39,10 +39,11 @@ public class ProductServiceIMPL implements IProductService{
     }
 
     @Override
-    public List<Product> findAllByIdCategory(Long idCategory) {
-        List<Product> products = productRepository.findAllByIdCategory(idCategory);
+    public List<Product> findAllByNameCategory(String nameCategory) {
+        List<Product> products = productRepository.findAllByNameCategory(nameCategory);
         return products;
     }
+
     @Override
     public Optional<Product> findById(Long id) {
         return productRepository.findById(id);
