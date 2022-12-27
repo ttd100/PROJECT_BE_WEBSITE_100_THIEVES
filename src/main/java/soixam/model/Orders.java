@@ -1,16 +1,25 @@
 package soixam.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-
-public class Order {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "orders")
+@EntityListeners(AuditingEntityListener.class)
+public class Orders {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Integer idOrder;
-    @Column( nullable = false )
+    @Column( nullable = false)
     @CreatedDate
     private Date createDate;
     @Column( nullable = false, columnDefinition = "nvarchar(100)" )
@@ -18,6 +27,6 @@ public class Order {
     @ManyToOne
     @JoinColumn( name = "username" )
     private User user;
-    @OneToMany( fetch = FetchType.LAZY )
+    @OneToMany(mappedBy = "orders",fetch = FetchType.LAZY )
     List<OrderDetail> orderDetails;
 }

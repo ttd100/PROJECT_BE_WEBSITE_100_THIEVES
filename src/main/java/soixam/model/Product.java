@@ -36,14 +36,11 @@ public class Product {
     private int quantity;
     @ManyToOne @JoinColumn(name = "idcategory")
     private Category category;
-<<<<<<< HEAD
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     @JsonIgnore
     List<Favorite> favorites;
-=======
     @ManyToOne @JoinColumn(name = "idproductstyle")
     private ProductStyle productStyle;
->>>>>>> 5906d6d310d5af0129da30ee4f65dddb31036299
     @ManyToOne
     private User user;
     //chien
