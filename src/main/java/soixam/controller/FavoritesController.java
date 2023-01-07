@@ -20,7 +20,7 @@ public class FavoritesController {
     }
     @PostMapping
     public ResponseEntity<?> createFavorites(@RequestBody Favorite favorite){
-        Long liked = favoriteService.checkExistsByIdProductAndUser(favorite.getUser().getId(),favorite.getProduct().getIdProduct());
+        Long liked = favoriteService.checkExistsByIdProductAndUser(favorite.getUser().getUserId(),favorite.getProduct().getIdProduct());
         if (liked!=null){ //nếu đã like thì sẽ unlike
             deleteFavorite(liked);
             return ResponseEntity.ok(false);

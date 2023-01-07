@@ -39,7 +39,6 @@ public class ProductController {
         if (productService.existsByName(product.getNameProduct())){
             return new ResponseEntity<>(new ResponseMessage("product_invalid"),HttpStatus.OK);
         }
-
         Long idCate = product.getCategory().getIdCategory();
         Optional<Category> categoryOptional = categoryService.findById(idCate);
         if (!categoryOptional.isPresent()) {

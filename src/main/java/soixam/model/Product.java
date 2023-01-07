@@ -11,6 +11,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -43,5 +44,6 @@ public class Product {
     private ProductStyle productStyle;
     @ManyToOne
     private User user;
-    //chien
+    @OneToMany(mappedBy = "product")
+    List<ProductDetail> detailList = new ArrayList<>();
 }

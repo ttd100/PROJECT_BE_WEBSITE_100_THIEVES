@@ -23,7 +23,8 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
-    private Long id;
+    @Column(name = "userId")
+    private Long userId;
     @NotBlank
     @Size( min = 2, max = 50 )
     private String name;
@@ -52,7 +53,7 @@ public class User {
     }
 
     public User(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles) {
-        this.id = id;
+        this.userId = id;
         this.name = name;
         this.username = username;
         this.email = email;
@@ -71,12 +72,12 @@ public class User {
         this.password = encode;
     }
 
-    public Long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long id) {
+        this.userId = id;
     }
 
     public String getName() {
